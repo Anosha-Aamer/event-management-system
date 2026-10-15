@@ -32,7 +32,11 @@ const authSlice = createSlice({
         (u) => u.email === email.trim().toLowerCase() && u.password === password
       );
       if (!user) {
-        state.error = 'Invalid email or password.';
+        state.error = 'No account found with this email..';
+        return;
+      }
+      if (user.password !== password) {
+        state.error = 'Incorrect password. Please try again.';
         return;
       }
       state.currentUser = { id: user.id, name: user.name, email: user.email };

@@ -164,4 +164,4 @@ Features were developed on separate branches and merged through Pull Requests, w
 
 ## Author
 
-Your Name · Roll Number · Web Programming, Assignment 2
+Anosha Aamer · 23L-2633 · Web Programming, Assignment 2

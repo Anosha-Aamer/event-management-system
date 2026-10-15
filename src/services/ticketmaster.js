@@ -18,9 +18,12 @@ const request = async (path, params = {}) => {
 };
 
 const pickImage = (images = []) => {
-  const wide = images.filter((i) => i.ratio === '16_9').sort((a, b) => a.width - b.width);
-  return (wide.find((i) => i.width >= 640) || wide[wide.length - 1] || images[0])?.url || null;
+  const real = images.filter((i) => !i.fallback); 
+  const wide = real.filter((i) => i.ratio === '16_9').sort((a, b) => a.width - b.width);
+  return (wide.find((i) => i.width >= 640) || wide[wide.length - 1] || real[0])?.url || null;
 };
+
+const clean = (value) => (value && value !== 'Undefined' ? value : '');
 
 export const normalizeEvent = (e) => {
   const venue = e._embedded?.venues?.[0];
@@ -40,9 +43,9 @@ export const normalizeEvent = (e) => {
     city: venue?.city?.name || '',
     state: venue?.state?.name || '',
     country: venue?.country?.name || '',
-    category: cls?.segment?.name || 'Other',
-    genre: cls?.genre?.name || '',
-    subGenre: cls?.subGenre?.name || '',
+    category: clean(cls?.segment?.name) || 'Other',
+    genre: clean(cls?.genre?.name),
+    subGenre: clean(cls?.subGenre?.name),
     info: e.info || '',
     note: e.pleaseNote || '',
     priceMin: price?.min ?? null,

@@ -16,6 +16,10 @@ export default function Events() {
   const [filters, setFilters] = useState(EMPTY);
   const [debounced, setDebounced] = useState(EMPTY);
   const [pageNum, setPageNum] = useState(0);
+  // Set the browser tab title for this page
+  useEffect(() => {
+    document.title = 'Explore Events | EventHub';
+  }, []);
 
   // Load categories from the API (slightly delayed to respect the 2 req/sec limit)
   useEffect(() => {
